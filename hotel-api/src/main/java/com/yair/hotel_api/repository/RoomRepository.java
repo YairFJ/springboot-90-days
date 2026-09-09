@@ -1,14 +1,15 @@
 package com.yair.hotel_api.repository;
 
 import com.yair.hotel_api.model.Room;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
+@Repository
 public class RoomRepository {
-    private List<Room> rooms = new ArrayList<>();
+    private final List<Room> rooms = new ArrayList<>();
 
     private static long lastId = 1;
 
