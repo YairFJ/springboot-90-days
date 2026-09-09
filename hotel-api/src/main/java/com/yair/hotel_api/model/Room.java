@@ -16,12 +16,6 @@ public class Room {
         this.available = true;
     }
 
-    public void setId(Long id){
-        this.id = id;
-    }
-    public Long getId(){
-        return this.id;
-    }
 
     public void setNumber(int number){
         this.number = number;
