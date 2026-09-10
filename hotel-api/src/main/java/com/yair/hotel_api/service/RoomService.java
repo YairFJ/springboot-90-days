@@ -2,7 +2,6 @@ package com.yair.hotel_api.service;
 
 import com.yair.hotel_api.model.Room;
 import com.yair.hotel_api.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +16,15 @@ public class RoomService {
     }
 
     public List<Room> getAllRooms(){
-        return this.roomRepository.getAllRooms();
+        return roomRepository.getAllRooms();
     }
 
     public Optional<Room> getRoomById(Long id){
-        return this.roomRepository.getRoomById(id);
+        return roomRepository.getRoomById(id);
+    }
+
+    public void createRoom(Room room){
+        roomRepository.saveRoom(room);
     }
 
 }
