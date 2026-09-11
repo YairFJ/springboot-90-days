@@ -35,4 +35,9 @@ public class RoomController {
     public ResponseEntity<Room> editRoom(@PathVariable Long id, @RequestBody Room room){
         return roomService.editRoom(id, room);
     }
+
+    @DeleteMapping("/rooms/{id}")
+    public ResponseEntity<Room> deleteRoom(@PathVariable Long id){
+        return roomService.deleteRoom(id);
+    }
 }

@@ -42,4 +42,11 @@ public class RoomService {
         return new ResponseEntity<>(editedRoom,HttpStatus.OK);
     }
 
+    public ResponseEntity<Room> deleteRoom(Long id){
+        if(roomRepository.deleteRoom(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }

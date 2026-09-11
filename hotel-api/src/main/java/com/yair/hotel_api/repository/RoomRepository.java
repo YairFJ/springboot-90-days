@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -38,6 +39,10 @@ public class RoomRepository {
         });
         return oldRoom.orElseThrow(()-> new RuntimeException("ID INCORRECT"));
 
+    }
+
+    public boolean deleteRoom(Long id){
+       return rooms.removeIf((room -> Objects.equals(room.getId(), id)));
     }
 
 
