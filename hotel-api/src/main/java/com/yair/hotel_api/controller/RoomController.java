@@ -2,10 +2,10 @@ package com.yair.hotel_api.controller;
 
 import com.yair.hotel_api.model.Room;
 import com.yair.hotel_api.service.RoomService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -27,7 +27,12 @@ public class RoomController {
     }
 
     @GetMapping("/rooms/{id}")
-    public Optional<Room> getRoomById(@PathVariable Long id){
+    public ResponseEntity<Room> getRoomById(@PathVariable Long id){
         return roomService.getRoomById(id);
+    }
+
+    @PutMapping("/rooms/{id}")
+    public ResponseEntity<Room> editRoom(@PathVariable Long id, @RequestBody Room room){
+        return roomService.editRoom(id, room);
     }
 }

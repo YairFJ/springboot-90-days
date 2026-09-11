@@ -28,5 +28,18 @@ public class RoomRepository {
          return rooms.stream().filter(room -> room.getId().equals(id)).findFirst();
     }
 
+    public Room editRoom(Long id, Room room){
+        Optional<Room> oldRoom = getRoomById(id);
+        oldRoom.ifPresent(old -> {
+            old.setNumber(room.getNumber());
+            old.setType(room.getType());
+            old.setPricePerNight(room.getPricePerNight());
+            old.setAvailable(room.isAvailable());
+        });
+        return oldRoom.orElseThrow(()-> new RuntimeException("ID INCORRECT"));
+
+    }
+
+
 
 }
