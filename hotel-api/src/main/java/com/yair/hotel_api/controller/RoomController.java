@@ -17,8 +17,8 @@ public class RoomController {
     }
 
     @PostMapping("/rooms")
-    public void createRoom(@RequestBody Room room){
-        roomService.createRoom(room);
+    public ResponseEntity<Room> createRoom(@RequestBody Room room){
+       return roomService.createRoom(room);
     }
 
     @GetMapping("/rooms")

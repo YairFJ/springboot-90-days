@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 public class RoomRepository {
     private final List<Room> rooms = new ArrayList<>();
-
     private static long lastId = 1;
 
 

@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @Service
 public class RoomService {
-
     private final RoomRepository roomRepository;
     public RoomService(RoomRepository roomRepository){
         this.roomRepository = roomRepository;
     }
+
 
     public List<Room> getAllRooms(){
         return roomRepository.getAllRooms();
@@ -30,8 +30,12 @@ public class RoomService {
         return new ResponseEntity<>(room.get(),HttpStatus.OK);
     }
 
-    public void createRoom(Room room){
-        roomRepository.saveRoom(room);
+    public ResponseEntity<Room> createRoom(Room room){
+        if(room.getNumber() > 0 && room.getType() != null && room.getPricePerNight() != null){
+            roomRepository.saveRoom(room);
+            return new ResponseEntity<>(room,HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(room,HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntity<Room> editRoom(Long id, Room room){
