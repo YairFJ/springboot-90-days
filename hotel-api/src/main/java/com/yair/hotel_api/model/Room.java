@@ -1,13 +1,22 @@
 package com.yair.hotel_api.model;
 
-import java.math.BigDecimal;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+import java.math.BigDecimal;
+@Entity
 public class Room {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int number;
     private String type;
     private BigDecimal pricePerNight;
     private boolean available;
+
+    protected Room() {}
 
     public Room(int number, String type, BigDecimal pricePerNight) {
         this.number = number;
@@ -15,10 +24,9 @@ public class Room {
         this.pricePerNight = pricePerNight;
         this.available = true;
     }
+
+
     public Long getId(){return this.id;}
-    public void setId(Long id){
-        this.id = id;
-    }
 
     public int getNumber(){
         return this.number;
