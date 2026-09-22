@@ -1,8 +1,6 @@
 package com.yair.hotel_api.service;
-
 import com.yair.hotel_api.model.Room;
 import com.yair.hotel_api.repository.IRoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,17 +8,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RoomService {
+public class RoomService implements IRoomService {
     private final IRoomRepository repository;
 
     public RoomService(IRoomRepository repository) {
         this.repository = repository;
     }
 
+    @Override
     public List<Room> getAllRooms(){
         return repository.findAll();
     }
 
+    @Override
     public ResponseEntity<Room> getRoomById(Long id){
         if(repository.findById(id).isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -28,6 +28,7 @@ public class RoomService {
         return new ResponseEntity<>(repository.findById(id).get(),HttpStatus.OK);
     }
 
+    @Override
     public ResponseEntity<Room> createRoom(Room room){
         if(room.getNumber() > 0 && room.getType() != null && room.getPricePerNight() != null){
             repository.save(room);
@@ -36,6 +37,7 @@ public class RoomService {
         return new ResponseEntity<>(room,HttpStatus.BAD_REQUEST);
     }
 
+    @Override
     public ResponseEntity<Room> editRoom(Long id, Room editedRoom){
 
         Room oldRoom = repository.findById(id).orElse(null);
@@ -54,6 +56,7 @@ public class RoomService {
         return new ResponseEntity<>(savedRoom,HttpStatus.OK);
     }
 
+    @Override
     public ResponseEntity<Room> deleteRoom(Long id){
         if(repository.findById(id).isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
