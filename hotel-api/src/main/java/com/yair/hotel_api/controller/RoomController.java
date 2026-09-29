@@ -1,5 +1,7 @@
 package com.yair.hotel_api.controller;
 
+import com.yair.hotel_api.dto.RoomRequestDTO;
+import com.yair.hotel_api.dto.RoomResponseDTO;
 import com.yair.hotel_api.model.Room;
 import com.yair.hotel_api.service.RoomService;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,8 @@ public class RoomController {
     }
 
     @PostMapping("/rooms")
-    public ResponseEntity<Room> createRoom(@RequestBody Room room){
-       return roomService.createRoom(room);
+    public ResponseEntity<Room> createRoom(@RequestBody RoomRequestDTO roomDTO){
+       return roomService.createRoom(roomDTO);
     }
 
     @GetMapping("/rooms")
@@ -27,7 +29,7 @@ public class RoomController {
     }
 
     @GetMapping("/rooms/{id}")
-    public ResponseEntity<Room> getRoomById(@PathVariable Long id){
+    public ResponseEntity<RoomResponseDTO> getRoomById(@PathVariable Long id){
         return roomService.getRoomById(id);
     }
 

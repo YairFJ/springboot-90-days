@@ -1,4 +1,6 @@
 package com.yair.hotel_api.service;
+import com.yair.hotel_api.dto.RoomRequestDTO;
+import com.yair.hotel_api.dto.RoomResponseDTO;
 import com.yair.hotel_api.model.Room;
 import com.yair.hotel_api.repository.IRoomRepository;
 import org.springframework.http.HttpStatus;
@@ -6,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoomService implements IRoomService {
@@ -21,20 +24,29 @@ public class RoomService implements IRoomService {
     }
 
     @Override
-    public ResponseEntity<Room> getRoomById(Long id){
-        if(repository.findById(id).isEmpty()){
+    public ResponseEntity<RoomResponseDTO> getRoomById(Long id){
+        Optional<Room> room = repository.findById(id);
+
+
+        if(room.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(repository.findById(id).get(),HttpStatus.OK);
+        RoomResponseDTO roomResponseDTO = new RoomResponseDTO(room.get().getId(), room.get().getNumber(), room.get().getType(),room.get().getPricePerNight(), room.get().isAvailable());
+        return new ResponseEntity<>(roomResponseDTO,HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Room> createRoom(Room room){
-        if(room.getNumber() > 0 && room.getType() != null && room.getPricePerNight() != null){
+    public ResponseEntity<Room> createRoom(RoomRequestDTO roomDTO){
+        if(roomDTO.getNumber() > 0 && roomDTO.getType() != null && roomDTO.getPricePerNight() != null){
+            Room room = new Room(
+                    roomDTO.getNumber(),
+                    roomDTO.getType(),
+                    roomDTO.getPricePerNight()
+            );
             repository.save(room);
             return new ResponseEntity<>(room,HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(room,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @Override
