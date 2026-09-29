@@ -1,6 +1,7 @@
 package com.yair.hotel_api.service;
 import com.yair.hotel_api.dto.RoomRequestDTO;
 import com.yair.hotel_api.dto.RoomResponseDTO;
+import com.yair.hotel_api.mapper.RoomMapper;
 import com.yair.hotel_api.model.Room;
 import com.yair.hotel_api.repository.IRoomRepository;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,8 @@ public class RoomService implements IRoomService {
     }
 
     @Override
-    public List<Room> getAllRooms(){
-        return repository.findAll();
+    public List<RoomResponseDTO> getAllRooms(){
+        return RoomMapper.toDtoList(repository.findAll());
     }
 
     @Override
@@ -31,12 +32,12 @@ public class RoomService implements IRoomService {
         if(room.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        RoomResponseDTO roomResponseDTO = new RoomResponseDTO(room.get().getId(), room.get().getNumber(), room.get().getType(),room.get().getPricePerNight(), room.get().isAvailable());
+        RoomResponseDTO roomResponseDTO = RoomMapper.toResponseDTO(room.get());
         return new ResponseEntity<>(roomResponseDTO,HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Room> createRoom(RoomRequestDTO roomDTO){
+    public ResponseEntity<RoomResponseDTO> createRoom(RoomRequestDTO roomDTO){
         if(roomDTO.getNumber() > 0 && roomDTO.getType() != null && roomDTO.getPricePerNight() != null){
             Room room = new Room(
                     roomDTO.getNumber(),
@@ -44,13 +45,14 @@ public class RoomService implements IRoomService {
                     roomDTO.getPricePerNight()
             );
             repository.save(room);
-            return new ResponseEntity<>(room,HttpStatus.CREATED);
+            RoomResponseDTO roomResponseDTO = RoomMapper.toResponseDTO(room);
+            return new ResponseEntity<>(roomResponseDTO,HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @Override
-    public ResponseEntity<Room> editRoom(Long id, Room editedRoom){
+    public ResponseEntity<RoomResponseDTO> editRoom(Long id, Room editedRoom){
 
         Room oldRoom = repository.findById(id).orElse(null);
 
@@ -64,12 +66,13 @@ public class RoomService implements IRoomService {
         oldRoom.setAvailable(editedRoom.isAvailable());
 
         Room savedRoom = repository.save(oldRoom);
+        RoomResponseDTO room = RoomMapper.toResponseDTO(savedRoom);
 
-        return new ResponseEntity<>(savedRoom,HttpStatus.OK);
+        return new ResponseEntity<>(room,HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Room> deleteRoom(Long id){
+    public ResponseEntity<RoomResponseDTO> deleteRoom(Long id){
         if(repository.findById(id).isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

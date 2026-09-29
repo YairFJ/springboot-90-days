@@ -7,13 +7,13 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface IRoomService {
-    public List<Room> getAllRooms();
-    public ResponseEntity<RoomResponseDTO> getRoomById(Long id);
+     List<RoomResponseDTO> getAllRooms();
+     ResponseEntity<RoomResponseDTO> getRoomById(Long id);
 
-    ResponseEntity<Room> createRoom(RoomRequestDTO roomDTO);
+     ResponseEntity<RoomResponseDTO> createRoom(RoomRequestDTO roomDTO);
 
-    public ResponseEntity<Room> editRoom(Long id, Room editedRoom);
+     ResponseEntity<RoomResponseDTO> editRoom(Long id, Room editedRoom);
 
-    public ResponseEntity<Room> deleteRoom(Long id);
+     ResponseEntity<RoomResponseDTO> deleteRoom(Long id);
 
 }

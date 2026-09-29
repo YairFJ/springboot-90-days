@@ -19,12 +19,12 @@ public class RoomController {
     }
 
     @PostMapping("/rooms")
-    public ResponseEntity<Room> createRoom(@RequestBody RoomRequestDTO roomDTO){
+    public ResponseEntity<RoomResponseDTO> createRoom(@RequestBody RoomRequestDTO roomDTO){
        return roomService.createRoom(roomDTO);
     }
 
     @GetMapping("/rooms")
-    public List<Room> getAllRooms(){
+    public List<RoomResponseDTO> getAllRooms(){
         return roomService.getAllRooms();
     }
 
@@ -34,12 +34,12 @@ public class RoomController {
     }
 
     @PutMapping("/rooms/{id}")
-    public ResponseEntity<Room> editRoom(@PathVariable Long id, @RequestBody Room room){
+    public ResponseEntity<RoomResponseDTO> editRoom(@PathVariable Long id, @RequestBody Room room){
         return roomService.editRoom(id, room);
     }
 
     @DeleteMapping("/rooms/{id}")
-    public ResponseEntity<Room> deleteRoom(@PathVariable Long id){
+    public ResponseEntity<RoomResponseDTO> deleteRoom(@PathVariable Long id){
         return roomService.deleteRoom(id);
     }
 }
