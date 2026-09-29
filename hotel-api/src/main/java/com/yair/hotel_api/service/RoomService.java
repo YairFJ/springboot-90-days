@@ -52,7 +52,7 @@ public class RoomService implements IRoomService {
     }
 
     @Override
-    public ResponseEntity<RoomResponseDTO> editRoom(Long id, Room editedRoom){
+    public ResponseEntity<RoomResponseDTO> editRoom(Long id, RoomRequestDTO editedRoom){
 
         Room oldRoom = repository.findById(id).orElse(null);
 
@@ -63,7 +63,6 @@ public class RoomService implements IRoomService {
         oldRoom.setNumber(editedRoom.getNumber());
         oldRoom.setType(editedRoom.getType());
         oldRoom.setPricePerNight(editedRoom.getPricePerNight());
-        oldRoom.setAvailable(editedRoom.isAvailable());
 
         Room savedRoom = repository.save(oldRoom);
         RoomResponseDTO room = RoomMapper.toResponseDTO(savedRoom);

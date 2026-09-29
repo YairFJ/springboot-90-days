@@ -12,7 +12,7 @@ public interface IRoomService {
 
      ResponseEntity<RoomResponseDTO> createRoom(RoomRequestDTO roomDTO);
 
-     ResponseEntity<RoomResponseDTO> editRoom(Long id, Room editedRoom);
+     ResponseEntity<RoomResponseDTO> editRoom(Long id, RoomRequestDTO editedRoom);
 
      ResponseEntity<RoomResponseDTO> deleteRoom(Long id);
 

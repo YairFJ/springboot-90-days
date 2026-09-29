@@ -34,7 +34,7 @@ public class RoomController {
     }
 
     @PutMapping("/rooms/{id}")
-    public ResponseEntity<RoomResponseDTO> editRoom(@PathVariable Long id, @RequestBody Room room){
+    public ResponseEntity<RoomResponseDTO> editRoom(@PathVariable Long id, @RequestBody RoomRequestDTO room){
         return roomService.editRoom(id, room);
     }
 
